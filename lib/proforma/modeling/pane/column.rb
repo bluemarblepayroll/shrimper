@@ -18,7 +18,8 @@ module Proforma
 
         attr_writer :align,
                     :label_width,
-                    :lines
+                    :lines,
+                    :value_width
 
         def_delegator :lines, :length, :line_count
 
@@ -28,6 +29,10 @@ module Proforma
 
         def label_width
           @label_width ? @label_width.to_f : nil
+        end
+
+        def value_width
+          @value_width ? @value_width.to_f : nil
         end
 
         def lines
@@ -46,7 +51,8 @@ module Proforma
           self.class.new(
             align: align,
             label_width: label_width,
-            lines: compiled_lines
+            lines: compiled_lines,
+            value_width: value_width
           )
         end
       end
