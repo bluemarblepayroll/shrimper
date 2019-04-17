@@ -7,8 +7,4 @@
 # LICENSE file in the root directory of this source tree.
 #
 
-require 'spec_helper'
-
-describe ::Shrimper do
-  it { expect(1).to eq(1) }
-end
+require_relative 'renderers/plain_text_renderer'

@@ -7,11 +7,20 @@
 # LICENSE file in the root directory of this source tree.
 #
 
+require 'yaml'
+
 require 'pry'
+require 'pdf/inspector'
 
 require 'simplecov'
 require 'simplecov-console'
 SimpleCov.formatter = SimpleCov::Formatter::Console
 SimpleCov.start
 
-require './lib/shrimper'
+require './lib/proforma'
+
+def yaml_read(file)
+  # rubocop:disable Security/YAMLLoad
+  YAML.load(File.open(file))
+  # rubocop:enable Security/YAMLLoad
+end

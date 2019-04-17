@@ -1,0 +1,164 @@
+data:
+- id: 1
+  demographics:
+    first: Will
+    last: Smith
+  username: will_smith
+  login_count: 9219
+  phone_numbers:
+  - type: cell
+    number: 555-444-3333
+  - type: fax
+    number: 333-444-2222
+- id: 2
+  demographics:
+    first: Martin
+    last: Lawrence
+  username: mlaw10
+  login_count: 8077
+  phone_numbers:
+  - type: home
+    number: 999-888-7777
+- id: 3
+  demographics:
+    first: Will
+    last: Ferrell
+  username: will.ferrell
+  login_count: 190890
+  phone_numbers:
+
+template: !ruby/object:Proforma::Template
+  output: :collection
+  title: User List
+  children:
+  - !ruby/object:Proforma::Modeling::Banner
+    details: "555 N. Michigan Ave.\nChicago, IL 62626\n555-555-5555 ext. 55555"
+    title: Some Random System
+  - !ruby/object:Proforma::Modeling::Spacer {}
+  - !ruby/object:Proforma::Modeling::Header
+    value: User List
+  - !ruby/object:Proforma::Modeling::Separator {}
+  - !ruby/object:Proforma::Modeling::Text
+    value: The following is a list of users
+  - !ruby/object:Proforma::Modeling::Spacer {}
+  - !ruby/object:Proforma::Modeling::DataTable
+    aggregators:
+      - !ruby/object:Proforma::Modeling::DataTable::Aggregator
+        property: login_count
+        function: :sum
+        name: login_count_sum
+      - !ruby/object:Proforma::Modeling::DataTable::Aggregator
+        property: login_count
+        function: :ave
+        name: login_count_ave
+    columns:
+    - !ruby/object:Proforma::Modeling::DataTable::Column
+      header: ID Number
+      body: "{id}"
+    - !ruby/object:Proforma::Modeling::DataTable::Column
+      header: First Name
+      body: "{demographics.first}"
+    - !ruby/object:Proforma::Modeling::DataTable::Column
+      header: Last Name
+      body: "{demographics.last}"
+    - !ruby/object:Proforma::Modeling::DataTable::Column
+      header: Username
+      body: "{username}"
+      footer: Total
+    - !ruby/object:Proforma::Modeling::DataTable::Column
+      header: Login Count
+      footer: '{login_count_sum::number::0} ({login_count_ave::number::2} average)'
+      body: "{login_count::number::0}"
+  - !ruby/object:Proforma::Modeling::Spacer {}
+  - !ruby/object:Proforma::Modeling::Grouping
+    children:
+    - !ruby/object:Proforma::Modeling::Header
+      value: 'User Details: {demographics.last}, {demographics.first} ({id})'
+    - !ruby/object:Proforma::Modeling::Separator {}
+    - !ruby/object:Proforma::Modeling::Text
+      value: 'The following is the details for {demographics.first}:'
+    - !ruby/object:Proforma::Modeling::Pane
+      columns:
+      - !ruby/object:Proforma::Modeling::Pane::Column
+        label_width: 25.0
+        lines:
+        - !ruby/object:Proforma::Modeling::Pane::Line
+          label: ID Number
+          value: '{id}'
+        - !ruby/object:Proforma::Modeling::Pane::Line
+          label: First Name
+          value: '{demographics.first}'
+        - !ruby/object:Proforma::Modeling::Pane::Line
+          label: Last Name
+          value: '{demographics.last}'
+    - !ruby/object:Proforma::Modeling::Spacer {}
+    - !ruby/object:Proforma::Modeling::Header
+      value: Phone Numbers
+    - !ruby/object:Proforma::Modeling::DataTable
+      property: phone_numbers
+      empty_message: No phone numbers.
+      columns:
+      - !ruby/object:Proforma::Modeling::DataTable::Column
+        header: Type
+        body: "{type}"
+      - !ruby/object:Proforma::Modeling::DataTable::Column
+        header: Number
+        body: "{number}"
+    - !ruby/object:Proforma::Modeling::Spacer {}
+
+documents:
+- !ruby/object:Proforma::Document
+  title: User List
+  contents: |+
+    ========================================
+    Some Random System
+    ========================================
+    555 N. Michigan Ave.
+    Chicago, IL 62626
+    555-555-5555 ext. 55555
+    ========================================
+
+    USER LIST
+    ----------------------------------------
+    The following is a list of users
+
+    ID Number, First Name, Last Name, Username, Login Count
+    1, Will, Smith, will_smith, 9,219
+    2, Martin, Lawrence, mlaw10, 8,077
+    3, Will, Ferrell, will.ferrell, 190,890
+    , , , Total, 208,186 (69,395.33 average)
+
+    USER DETAILS: SMITH, WILL (1)
+    ----------------------------------------
+    The following is the details for Will:
+    ID Number: 1
+    First Name: Will
+    Last Name: Smith
+
+    PHONE NUMBERS
+    Type, Number
+    cell, 555-444-3333
+    fax, 333-444-2222
+
+    USER DETAILS: LAWRENCE, MARTIN (2)
+    ----------------------------------------
+    The following is the details for Martin:
+    ID Number: 2
+    First Name: Martin
+    Last Name: Lawrence
+
+    PHONE NUMBERS
+    Type, Number
+    home, 999-888-7777
+
+    USER DETAILS: FERRELL, WILL (3)
+    ----------------------------------------
+    The following is the details for Will:
+    ID Number: 3
+    First Name: Will
+    Last Name: Ferrell
+
+    PHONE NUMBERS
+    No phone numbers.
+
+  extension: '.txt'

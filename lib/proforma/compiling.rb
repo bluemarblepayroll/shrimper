@@ -7,4 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 #
 
-require_relative 'shrimper/shrimper'
+require_relative 'compiling/aggregation'
+require_relative 'compiling/compilable'
+require_relative 'compiling/counter'
+require_relative 'compiling/formatter'
+require_relative 'compiling/resolver'
