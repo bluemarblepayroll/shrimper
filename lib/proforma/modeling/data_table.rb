@@ -66,21 +66,19 @@ module Proforma
         records.empty? && !empty_message.empty?
       end
 
-      def make_footer(meta_data, formatter:, resolver:)
-        return Table::Section.new unless footer?
-
-        rows = [
-          make_row(:compile_footer_cell, meta_data, formatter: formatter, resolver: resolver)
-        ]
-
-        Table::Section.new(rows: rows)
+      def make_footer(data, formatter:, resolver:)
+        make(footer?, :compile_footer_cell, data, formatter: formatter, resolver: resolver)
       end
 
-      def make_header(meta_data, formatter:, resolver:)
-        return Table::Section.new unless header?
+      def make_header(data, formatter:, resolver:)
+        make(header?, :compile_header_cell, data, formatter: formatter, resolver: resolver)
+      end
+
+      def make(visible, row_compile_method, data, formatter:, resolver:)
+        return Table::Section.new unless visible
 
         rows = [
-          make_row(:compile_header_cell, meta_data, formatter: formatter, resolver: resolver)
+          make_row(row_compile_method, data, formatter: formatter, resolver: resolver)
         ]
 
         Table::Section.new(rows: rows)
