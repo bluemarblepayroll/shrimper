@@ -40,8 +40,8 @@ jobs.each do |job|
   contents        = read_yaml(job)
   data            = contents['data']
   template        = contents['template']
-  evaluator       = contents['evaluator'] || Proforma::Evaluators::HashEvaluator.new
-  renderer        = contents['renderer'] || Proforma::Renderers::PlainTextRenderer.new
+  evaluator       = contents['evaluator'] || Proforma::HashEvaluator.new
+  renderer        = contents['renderer'] || Proforma::PlainTextRenderer.new
   job_output_dir  = File.join(output_dir, job_name)
 
   FileUtils.mkdir_p(job_output_dir)

@@ -23,8 +23,8 @@ describe ::Proforma do
       actual_documents = described_class.render(
         contents['data'],
         contents['template'],
-        evaluator: contents['evaluator'] || Proforma::Evaluators::HashEvaluator.new,
-        renderer: contents['renderer'] || Proforma::Renderers::PlainTextRenderer.new
+        evaluator: contents['evaluator'] || Proforma::HashEvaluator.new,
+        renderer: contents['renderer'] || Proforma::PlainTextRenderer.new
       )
 
       expect(actual_documents).to eq(expected_documents)

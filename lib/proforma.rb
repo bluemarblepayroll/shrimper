@@ -14,9 +14,9 @@ require 'stringio'
 require_relative 'proforma/attribute_based_object'
 require_relative 'proforma/compiling'
 require_relative 'proforma/document'
-require_relative 'proforma/evaluators'
+require_relative 'proforma/hash_evaluator'
 require_relative 'proforma/modeling'
-require_relative 'proforma/renderers'
+require_relative 'proforma/plain_text_renderer'
 require_relative 'proforma/prototype'
 require_relative 'proforma/template'
 
@@ -26,8 +26,8 @@ module Proforma
     def render(
       data,
       template,
-      evaluator: Evaluators::HashEvaluator.new,
-      renderer: Renderers::PlainTextRenderer.new
+      evaluator: HashEvaluator.new,
+      renderer: PlainTextRenderer.new
     )
       template.compile(data, evaluator)
               .map { |prototype| renderer.render(prototype) }

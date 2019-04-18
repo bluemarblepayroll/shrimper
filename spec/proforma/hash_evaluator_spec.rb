@@ -9,7 +9,7 @@
 
 require 'spec_helper'
 
-describe Proforma::Evaluators::HashEvaluator do
+describe Proforma::HashEvaluator do
   let(:hash) { { id: 1, 'first' => 'Matt' } }
 
   describe '#value' do
