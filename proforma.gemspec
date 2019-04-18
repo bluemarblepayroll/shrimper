@@ -3,7 +3,7 @@
 require './lib/proforma/version'
 
 Gem::Specification.new do |s|
-  s.name        = 'Proforma'
+  s.name        = 'proforma'
   s.version     = Proforma::VERSION
   s.summary     = 'Configurable and extendable document rendering engine for datasets'
 
