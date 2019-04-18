@@ -23,8 +23,6 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 2.3.8'
 
-  s.add_dependency('stringento', '~>2')
-
   s.add_development_dependency('guard-rspec', '~>4.7')
   s.add_development_dependency('pdf-inspector', '~>1')
   s.add_development_dependency('pry', '~>0')

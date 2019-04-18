@@ -1,8 +1,7 @@
 data:
 - id: 1
-  demographics:
-    first: Will
-    last: Smith
+  first: Will
+  last: Smith
   username: will_smith
   login_count: 9219
   phone_numbers:
@@ -11,18 +10,16 @@ data:
   - type: fax
     number: 333-444-2222
 - id: 2
-  demographics:
-    first: Martin
-    last: Lawrence
+  first: Martin
+  last: Lawrence
   username: mlaw10
   login_count: 8077
   phone_numbers:
   - type: home
     number: 999-888-7777
 - id: 3
-  demographics:
-    first: Will
-    last: Ferrell
+  first: Will
+  last: Ferrell
   username: will.ferrell
   login_count: 190890
   phone_numbers:
@@ -45,38 +42,38 @@ template: !ruby/object:Proforma::Template
     aggregators:
       - !ruby/object:Proforma::Modeling::DataTable::Aggregator
         property: login_count
-        function: :sum
+        function: sum
         name: login_count_sum
       - !ruby/object:Proforma::Modeling::DataTable::Aggregator
         property: login_count
-        function: :ave
+        function: ave
         name: login_count_ave
     columns:
     - !ruby/object:Proforma::Modeling::DataTable::Column
       header: ID Number
-      body: "{id}"
+      body: $:id
+      footer: Login Count Ave.
     - !ruby/object:Proforma::Modeling::DataTable::Column
       header: First Name
-      body: "{demographics.first}"
+      body: $:first
+      footer: $:login_count_ave
     - !ruby/object:Proforma::Modeling::DataTable::Column
       header: Last Name
-      body: "{demographics.last}"
+      body: $:last
     - !ruby/object:Proforma::Modeling::DataTable::Column
       header: Username
-      body: "{username}"
-      footer: Total
+      body: $:username
+      footer: Login Count Sum
     - !ruby/object:Proforma::Modeling::DataTable::Column
       header: Login Count
-      footer: '{login_count_sum::number::0} ({login_count_ave::number::2} average)'
-      body: "{login_count::number::0}"
+      footer: $:login_count_sum
+      body: $:login_count
   - !ruby/object:Proforma::Modeling::Spacer {}
   - !ruby/object:Proforma::Modeling::Grouping
     children:
     - !ruby/object:Proforma::Modeling::Header
-      value: 'User Details: {demographics.last}, {demographics.first} ({id})'
+      value: 'User Details'
     - !ruby/object:Proforma::Modeling::Separator {}
-    - !ruby/object:Proforma::Modeling::Text
-      value: 'The following is the details for {demographics.first}:'
     - !ruby/object:Proforma::Modeling::Pane
       columns:
       - !ruby/object:Proforma::Modeling::Pane::Column
@@ -84,13 +81,13 @@ template: !ruby/object:Proforma::Template
         lines:
         - !ruby/object:Proforma::Modeling::Pane::Line
           label: ID Number
-          value: '{id}'
+          value: $:id
         - !ruby/object:Proforma::Modeling::Pane::Line
           label: First Name
-          value: '{demographics.first}'
+          value: $:first
         - !ruby/object:Proforma::Modeling::Pane::Line
           label: Last Name
-          value: '{demographics.last}'
+          value: $:last
     - !ruby/object:Proforma::Modeling::Spacer {}
     - !ruby/object:Proforma::Modeling::Header
       value: Phone Numbers
@@ -100,10 +97,10 @@ template: !ruby/object:Proforma::Template
       columns:
       - !ruby/object:Proforma::Modeling::DataTable::Column
         header: Type
-        body: "{type}"
+        body: $:type
       - !ruby/object:Proforma::Modeling::DataTable::Column
         header: Number
-        body: "{number}"
+        body: $:number
     - !ruby/object:Proforma::Modeling::Spacer {}
 
 documents:
@@ -123,14 +120,13 @@ documents:
     The following is a list of users
 
     ID Number, First Name, Last Name, Username, Login Count
-    1, Will, Smith, will_smith, 9,219
-    2, Martin, Lawrence, mlaw10, 8,077
-    3, Will, Ferrell, will.ferrell, 190,890
-    , , , Total, 208,186 (69,395.33 average)
+    1, Will, Smith, will_smith, 9219
+    2, Martin, Lawrence, mlaw10, 8077
+    3, Will, Ferrell, will.ferrell, 190890
+    Login Count Ave., 69395.333333333333333333, , Login Count Sum, 208186.0
 
-    USER DETAILS: SMITH, WILL (1)
+    USER DETAILS
     ----------------------------------------
-    The following is the details for Will:
     ID Number: 1
     First Name: Will
     Last Name: Smith
@@ -140,9 +136,8 @@ documents:
     cell, 555-444-3333
     fax, 333-444-2222
 
-    USER DETAILS: LAWRENCE, MARTIN (2)
+    USER DETAILS
     ----------------------------------------
-    The following is the details for Martin:
     ID Number: 2
     First Name: Martin
     Last Name: Lawrence
@@ -151,9 +146,8 @@ documents:
     Type, Number
     home, 999-888-7777
 
-    USER DETAILS: FERRELL, WILL (3)
+    USER DETAILS
     ----------------------------------------
-    The following is the details for Will:
     ID Number: 3
     First Name: Will
     Last Name: Ferrell

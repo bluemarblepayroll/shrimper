@@ -24,10 +24,10 @@ module Proforma
           @value.to_s
         end
 
-        def compile(record, formatter:, resolver:)
+        def compile(record, evaluator)
           self.class.new(
-            label: evaluate_text(label, record, formatter: formatter, resolver: resolver),
-            value: evaluate_text(value, record, formatter: formatter, resolver: resolver)
+            label: evaluator.text(record, label),
+            value: evaluator.text(record, value)
           )
         end
       end

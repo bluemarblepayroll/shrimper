@@ -7,6 +7,4 @@
 # LICENSE file in the root directory of this source tree.
 #
 
-require_relative 'compiling/aggregation'
-require_relative 'compiling/compilable'
-require_relative 'compiling/counter'
+require_relative 'evaluators/hash_evaluator'

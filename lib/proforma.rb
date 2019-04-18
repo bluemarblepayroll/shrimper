@@ -10,11 +10,11 @@
 require 'bigdecimal'
 require 'forwardable'
 require 'stringio'
-require 'stringento'
 
 require_relative 'proforma/attribute_based_object'
 require_relative 'proforma/compiling'
 require_relative 'proforma/document'
+require_relative 'proforma/evaluators'
 require_relative 'proforma/modeling'
 require_relative 'proforma/renderers'
 require_relative 'proforma/prototype'
@@ -26,11 +26,10 @@ module Proforma
     def render(
       data,
       template,
-      formatter: Compiling::Formatter.new,
-      renderer: Renderers::PlainTextRenderer.new,
-      resolver: Compiling::Resolver.new
+      evaluator: Evaluators::HashEvaluator.new,
+      renderer: Renderers::PlainTextRenderer.new
     )
-      template.compile(data, formatter: formatter, resolver: resolver)
+      template.compile(data, evaluator)
               .map { |prototype| renderer.render(prototype) }
     end
   end

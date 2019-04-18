@@ -13,6 +13,6 @@ describe ::Proforma::Template do
   it '#compile should raise ArgumentError if output type is unknown' do
     template = described_class.new(output: :unknown)
 
-    expect { template.compile(nil, formatter: nil, resolver: nil) }.to raise_error(ArgumentError)
+    expect { template.compile(nil, nil) }.to raise_error(ArgumentError)
   end
 end

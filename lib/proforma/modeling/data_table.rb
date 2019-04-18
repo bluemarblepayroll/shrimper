@@ -34,24 +34,24 @@ module Proforma
         Array(@columns)
       end
 
-      def compile(data, formatter:, resolver:)
-        records = array(resolver.resolve(property, data))
+      def compile(data, evaluator)
+        records = array(evaluator.value(data, property))
 
         return Text.new(value: empty_message) if show_empty_message?(records)
 
-        meta_data = make_aggregator_meta_data(records, resolver: resolver)
+        meta_data = make_aggregator_meta_data(records, evaluator)
 
         Table.new(
-          body: make_body(records, formatter: formatter, resolver: resolver),
-          footer: make_footer(meta_data, formatter: formatter, resolver: resolver),
-          header: make_header({}, formatter: formatter, resolver: resolver)
+          body: make_body(records, evaluator),
+          footer: make_footer(meta_data, evaluator),
+          header: make_header({}, evaluator)
         )
       end
 
       private
 
-      def make_aggregator_meta_data(records, resolver:)
-        Compiling::Aggregation.new(aggregators, resolver).add(records).to_hash
+      def make_aggregator_meta_data(records, evaluator)
+        Compiling::Aggregation.new(aggregators, evaluator).add(records).to_hash
       end
 
       def footer?
@@ -66,35 +66,35 @@ module Proforma
         records.empty? && !empty_message.empty?
       end
 
-      def make_footer(data, formatter:, resolver:)
-        make(footer?, :compile_footer_cell, data, formatter: formatter, resolver: resolver)
+      def make_footer(data, evaluator)
+        make(footer?, :compile_footer_cell, data, evaluator)
       end
 
-      def make_header(data, formatter:, resolver:)
-        make(header?, :compile_header_cell, data, formatter: formatter, resolver: resolver)
+      def make_header(data, evaluator)
+        make(header?, :compile_header_cell, data, evaluator)
       end
 
-      def make(visible, row_compile_method, data, formatter:, resolver:)
+      def make(visible, row_compile_method, data, evaluator)
         return Table::Section.new unless visible
 
         rows = [
-          make_row(row_compile_method, data, formatter: formatter, resolver: resolver)
+          make_row(row_compile_method, data, evaluator)
         ]
 
         Table::Section.new(rows: rows)
       end
 
-      def make_body(records, formatter:, resolver:)
+      def make_body(records, evaluator)
         rows = records.map do |record|
-          make_row(:compile_body_cell, record, formatter: formatter, resolver: resolver)
+          make_row(:compile_body_cell, record, evaluator)
         end
 
         Table::Section.new(rows: rows)
       end
 
-      def make_row(method, record, formatter:, resolver:)
+      def make_row(method, record, evaluator)
         cells = columns.map do |column|
-          column.send(method, record, formatter: formatter, resolver: resolver)
+          column.send(method, record, evaluator)
         end
 
         Table::Row.new(cells: cells)

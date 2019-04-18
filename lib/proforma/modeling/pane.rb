@@ -25,14 +25,8 @@ module Proforma
         Array(@columns)
       end
 
-      def compile(data, formatter:, resolver:)
-        compiled_columns = columns.map do |column|
-          column.compile(
-            data,
-            formatter: formatter,
-            resolver: resolver
-          )
-        end
+      def compile(data, evaluator)
+        compiled_columns = columns.map { |column| column.compile(data, evaluator) }
 
         self.class.new(columns: compiled_columns)
       end

@@ -18,17 +18,9 @@ module Proforma
         Array(@children)
       end
 
-      def compile(data, formatter:, resolver:)
+      def compile(data, evaluator)
         children.map do |section|
-          if section.respond_to?(:compile)
-            section.compile(
-              data,
-              formatter: formatter,
-              resolver: resolver
-            )
-          else
-            section
-          end
+          section.respond_to?(:compile) ? section.compile(data, evaluator) : section
         end.flatten
       end
     end

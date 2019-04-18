@@ -42,26 +42,26 @@ module Proforma
           @width ? @width.to_f : nil
         end
 
-        def compile_header_cell(record, formatter:, resolver:)
+        def compile_header_cell(record, evaluator)
           Modeling::Table::Cell.new(
             align: align,
-            text: evaluate_text(header, record, formatter: formatter, resolver: resolver),
+            text: evaluator.text(record, header),
             width: width
           )
         end
 
-        def compile_body_cell(record, formatter:, resolver:)
+        def compile_body_cell(record, evaluator)
           Modeling::Table::Cell.new(
             align: align,
-            text: evaluate_text(body, record, formatter: formatter, resolver: resolver),
+            text: evaluator.text(record, body),
             width: width
           )
         end
 
-        def compile_footer_cell(record, formatter:, resolver:)
+        def compile_footer_cell(record, evaluator)
           Modeling::Table::Cell.new(
             align: align,
-            text: evaluate_text(footer, record, formatter: formatter, resolver: resolver),
+            text: evaluator.text(record, footer),
             width: width
           )
         end

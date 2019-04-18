@@ -13,17 +13,6 @@ module Proforma
     module Compilable
       private
 
-      def evaluate_text(text, object, formatter:, resolver:)
-        record = object.is_a?(Array) || object.nil? ? {} : object
-
-        Stringento.evaluate(
-          text,
-          record,
-          resolver: resolver,
-          formatter: formatter
-        )
-      end
-
       def array(data)
         data.is_a?(Hash) ? [data] : Array(data)
       end

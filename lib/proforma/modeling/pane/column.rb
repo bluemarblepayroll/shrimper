@@ -39,14 +39,8 @@ module Proforma
           Array(@lines)
         end
 
-        def compile(record, formatter:, resolver:)
-          compiled_lines = lines.map do |line|
-            line.compile(
-              record,
-              formatter: formatter,
-              resolver: resolver
-            )
-          end
+        def compile(record, evaluator)
+          compiled_lines = lines.map { |line| line.compile(record, evaluator) }
 
           self.class.new(
             align: align,

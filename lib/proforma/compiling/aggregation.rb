@@ -11,19 +11,21 @@ module Proforma
   module Compiling
     # This class is a group of aggregators that knows how to process records.
     class Aggregation
-      attr_reader :aggregators, :resolver
+      attr_reader :aggregators, :evaluator
 
-      def initialize(aggregators, resolver)
+      def initialize(aggregators, evaluator)
+        raise ArgumentError, 'evaluator is required' unless evaluator
+
         @aggregators  = Array(aggregators)
         @counters     = {}
-        @resolver     = resolver
+        @evaluator    = evaluator
       end
 
       def add(records)
         records.each do |record|
           aggregators.each do |aggregator|
             property  = aggregator.property
-            value     = resolver.resolve(property, record)
+            value     = evaluator.value(record, property)
             name      = aggregator.name
 
             entry(name).add(value)

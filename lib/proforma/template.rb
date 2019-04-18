@@ -26,11 +26,11 @@ module Proforma
       @output || COLLECTION
     end
 
-    def compile(data, formatter:, resolver:)
+    def compile(data, evaluator)
       if output == COLLECTION
-        compile_collection(data, formatter: formatter, resolver: resolver)
+        compile_collection(data, evaluator)
       elsif output == RECORD
-        compile_record(data, formatter: formatter, resolver: resolver)
+        compile_record(data, evaluator)
       else
         raise ArgumentError, "Cannot compile output type: #{output}"
       end
@@ -38,43 +38,26 @@ module Proforma
 
     private
 
-    def compile_collection(data, formatter:, resolver:)
-      compiled_children = Modeling::Collection.new(children: children).compile(
-        data,
-        formatter: formatter,
-        resolver: resolver
-      )
+    def compile_collection(data, evaluator)
+      compiled_children = Modeling::Collection.new(children: children).compile(data, evaluator)
 
       [
         Prototype.new(
           children: compiled_children,
-          title: resolve_title({}, formatter: formatter, resolver: resolver)
+          title: evaluator.text({}, title)
         )
       ]
     end
 
-    def resolve_title(data, formatter:, resolver:)
-      evaluate_text(
-        title,
-        data,
-        formatter: formatter,
-        resolver: resolver
-      )
-    end
-
-    def compile_record(data, formatter:, resolver:)
+    def compile_record(data, evaluator)
       default_grouping = Modeling::Grouping.new(children: children)
 
-      array(resolver.resolve(nil, data)).map do |record|
-        compiled_children = default_grouping.compile(
-          record,
-          formatter: formatter,
-          resolver: resolver
-        )
+      array(data).map do |record|
+        compiled_children = default_grouping.compile(record, evaluator)
 
         Prototype.new(
           children: compiled_children,
-          title: resolve_title(record, formatter: formatter, resolver: resolver)
+          title: evaluator.text(record, title)
         )
       end
     end

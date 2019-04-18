@@ -23,16 +23,11 @@ module Proforma
         Array(@children)
       end
 
-      def compile(data, formatter:, resolver:)
-        records = array(resolver.resolve(property, data))
+      def compile(data, evaluator)
+        records = array(evaluator.value(data, property))
 
-        records.map do |record|
-          Collection.new(children: children).compile(
-            record,
-            formatter: formatter,
-            resolver: resolver
-          )
-        end.flatten
+        records.map { |record| Collection.new(children: children).compile(record, evaluator) }
+               .flatten
       end
     end
   end

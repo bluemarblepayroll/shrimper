@@ -27,11 +27,11 @@ module Proforma
         @title.to_s
       end
 
-      def compile(data, formatter:, resolver:)
+      def compile(data, evaluator)
         self.class.new(
-          details: evaluate_text(details, data, formatter: formatter, resolver: resolver),
-          image: resolver.resolve(image, data),
-          title: evaluate_text(title, data, formatter: formatter, resolver: resolver)
+          details: evaluator.text(data, details),
+          image: evaluator.value(data, image),
+          title: evaluator.text(data, title)
         )
       end
     end

@@ -10,10 +10,12 @@
 require 'spec_helper'
 
 describe ::Proforma do
-  it 'should process each snapshot successfully' do
-    dir = File.join('spec', 'fixtures', 'snapshots', '*.yml')
+  let(:snapshot_dir) { File.join('spec', 'fixtures', 'snapshots', '*.yml') }
 
-    Dir[dir].each do |file|
+  let(:snapshot_filenames) { Dir[snapshot_dir] }
+
+  it 'should process each snapshot successfully' do
+    snapshot_filenames.each do |file|
       contents = yaml_read(file)
 
       expected_documents = contents['documents']
@@ -21,9 +23,8 @@ describe ::Proforma do
       actual_documents = described_class.render(
         contents['data'],
         contents['template'],
-        formatter: contents['formatter'] || ::Proforma::Compiling::Formatter.new,
-        renderer: contents['renderer'] || ::Proforma::Renderers::PlainTextRenderer.new,
-        resolver: contents['resolver'] || ::Proforma::Compiling::Resolver.new
+        evaluator: contents['evaluator'] || Proforma::Evaluators::HashEvaluator.new,
+        renderer: contents['renderer'] || Proforma::Renderers::PlainTextRenderer.new
       )
 
       expect(actual_documents).to eq(expected_documents)

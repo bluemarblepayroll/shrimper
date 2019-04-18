@@ -1,8 +1,7 @@
 data:
 - id: 1
-  demographics:
-    first: Will
-    last: Smith
+  first: Will
+  last: Smith
   username: will_smith
   login_count: 9219
   phone_numbers:
@@ -11,31 +10,29 @@ data:
   - type: fax
     number: 333-444-2222
 - id: 2
-  demographics:
-    first: Martin
-    last: Lawrence
+  first: Martin
+  last: Lawrence
   username: mlaw10
   login_count: 8077
   phone_numbers:
   - type: home
     number: 999-888-7777
 - id: 3
-  demographics:
-    first: Will
-    last: Ferrell
+  first: Will
+  last: Ferrell
   username: will.ferrell
   login_count: 190890
   phone_numbers:
 
 template: !ruby/object:Proforma::Template
   output: :record
-  title: 'User Details: {demographics.last}, {demographics.first} ({id})'
+  title: User Details
   children:
   - !ruby/object:Proforma::Modeling::Header
-    value: 'User Details: {demographics.last}, {demographics.first} ({id})'
+    value: User Details
   - !ruby/object:Proforma::Modeling::Separator {}
   - !ruby/object:Proforma::Modeling::Text
-    value: 'The following is the details for {demographics.first}:'
+    value: 'The following is user details'
   - !ruby/object:Proforma::Modeling::Pane
     columns:
     - !ruby/object:Proforma::Modeling::Pane::Column
@@ -43,13 +40,13 @@ template: !ruby/object:Proforma::Template
       lines:
       - !ruby/object:Proforma::Modeling::Pane::Line
         label: ID Number
-        value: '{id}'
+        value: $:id
       - !ruby/object:Proforma::Modeling::Pane::Line
         label: First Name
-        value: '{demographics.first}'
+        value: $:first
       - !ruby/object:Proforma::Modeling::Pane::Line
         label: Last Name
-        value: '{demographics.last}'
+        value: $:last
   - !ruby/object:Proforma::Modeling::Spacer {}
   - !ruby/object:Proforma::Modeling::Header
     value: Phone Numbers
@@ -59,19 +56,19 @@ template: !ruby/object:Proforma::Template
     columns:
     - !ruby/object:Proforma::Modeling::DataTable::Column
       header: Type
-      body: "{type}"
+      body: $:type
     - !ruby/object:Proforma::Modeling::DataTable::Column
       header: Number
-      body: "{number}"
+      body: $:number
   - !ruby/object:Proforma::Modeling::Spacer {}
 
 documents:
 - !ruby/object:Proforma::Document
-  title: "User Details: Smith, Will (1)"
+  title: User Details
   contents: |+
-    USER DETAILS: SMITH, WILL (1)
+    USER DETAILS
     ----------------------------------------
-    The following is the details for Will:
+    The following is user details
     ID Number: 1
     First Name: Will
     Last Name: Smith
@@ -83,11 +80,11 @@ documents:
 
   extension: '.txt'
 - !ruby/object:Proforma::Document
-  title: "User Details: Lawrence, Martin (2)"
+  title: User Details
   contents: |+
-    USER DETAILS: LAWRENCE, MARTIN (2)
+    USER DETAILS
     ----------------------------------------
-    The following is the details for Martin:
+    The following is user details
     ID Number: 2
     First Name: Martin
     Last Name: Lawrence
@@ -98,11 +95,11 @@ documents:
 
   extension: '.txt'
 - !ruby/object:Proforma::Document
-  title: "User Details: Ferrell, Will (3)"
+  title: User Details
   contents: |+
-    USER DETAILS: FERRELL, WILL (3)
+    USER DETAILS
     ----------------------------------------
-    The following is the details for Will:
+    The following is user details
     ID Number: 3
     First Name: Will
     Last Name: Ferrell
