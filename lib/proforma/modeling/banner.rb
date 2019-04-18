@@ -15,7 +15,7 @@ module Proforma
     class Banner < AttributeBasedObject
       include Compiling::Compilable
 
-      attr_writer :details, :title
+      attr_writer :details, :image_height, :image_width, :title
 
       attr_accessor :image
 
@@ -27,10 +27,20 @@ module Proforma
         @title.to_s
       end
 
+      def image_height
+        @image_height ? @image_height.to_f : nil
+      end
+
+      def image_width
+        @image_width ? @image_width.to_f : nil
+      end
+
       def compile(data, evaluator)
         self.class.new(
           details: evaluator.text(data, details),
           image: evaluator.value(data, image),
+          image_height: image_height,
+          image_width: image_width,
           title: evaluator.text(data, title)
         )
       end
