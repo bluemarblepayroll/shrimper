@@ -11,23 +11,11 @@ module Proforma
   module Modeling
     class Table
       # A table section has zero or more rows.
-      class Section
+      class Section < GenericContainer
         acts_as_hashable
 
-        attr_writer :rows
-
         def initialize(rows: [])
-          @rows = Row.array(rows)
-        end
-
-        def rows
-          Array(@rows)
-        end
-
-        def compile(data, evaluator)
-          compiled_rows = rows.map { |row| row.compile(data, evaluator) }
-
-          self.class.new(rows: compiled_rows)
+          super(:rows, Row, rows)
         end
       end
     end

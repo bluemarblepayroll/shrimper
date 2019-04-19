@@ -7,6 +7,7 @@
 # LICENSE file in the root directory of this source tree.
 #
 
+require_relative 'modeling/generic_container'
 require_relative 'modeling/types'
 require_relative 'modeling/banner'
 require_relative 'modeling/collection'

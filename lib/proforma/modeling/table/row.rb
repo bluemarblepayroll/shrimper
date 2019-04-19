@@ -12,23 +12,11 @@ module Proforma
     class Table
       # The second lowest unit of a table.  A table's header, body, and footer is each
       # composed of zero or more rows.
-      class Row
+      class Row < GenericContainer
         acts_as_hashable
 
-        attr_writer :cells
-
         def initialize(cells: [])
-          @cells = Cell.array(cells)
-        end
-
-        def cells
-          Array(@cells)
-        end
-
-        def compile(data, evaluator)
-          compiled_cells = cells.map { |cell| cell.compile(data, evaluator) }
-
-          self.class.new(cells: compiled_cells)
+          super(:cells, Cell, cells)
         end
       end
     end
