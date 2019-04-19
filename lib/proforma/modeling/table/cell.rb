@@ -35,6 +35,14 @@ module Proforma
         def width
           @width ? @width.to_f : nil
         end
+
+        def compile(data, evaluator)
+          self.class.new(
+            align: align,
+            text: evaluator.text(data, text),
+            width: width
+          )
+        end
       end
     end
   end

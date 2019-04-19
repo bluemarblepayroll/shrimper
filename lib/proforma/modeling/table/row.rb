@@ -24,6 +24,12 @@ module Proforma
         def cells
           Array(@cells)
         end
+
+        def compile(data, evaluator)
+          compiled_cells = cells.map { |cell| cell.compile(data, evaluator) }
+
+          self.class.new(cells: compiled_cells)
+        end
       end
     end
   end

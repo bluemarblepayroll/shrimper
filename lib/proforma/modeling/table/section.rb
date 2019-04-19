@@ -23,6 +23,12 @@ module Proforma
         def rows
           Array(@rows)
         end
+
+        def compile(data, evaluator)
+          compiled_rows = rows.map { |row| row.compile(data, evaluator) }
+
+          self.class.new(rows: compiled_rows)
+        end
       end
     end
   end

@@ -39,6 +39,14 @@ module Proforma
       def header
         @header || Section.new
       end
+
+      def compile(data, evaluator)
+        self.class.new(
+          body: body.compile(data, evaluator),
+          footer: footer.compile(data, evaluator),
+          header: header.compile(data, evaluator)
+        )
+      end
     end
   end
 end
