@@ -25,7 +25,7 @@ data:
   phone_numbers:
 
 template: !ruby/object:Proforma::Template
-  output: :record
+  split: true
   title: User Details
   children:
   - !ruby/object:Proforma::Modeling::Header

@@ -25,7 +25,6 @@ data:
   phone_numbers:
 
 template: !ruby/object:Proforma::Template
-  output: :collection
   title: User List
   children:
   - !ruby/object:Proforma::Modeling::Banner

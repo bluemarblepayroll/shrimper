@@ -14,25 +14,18 @@ module Proforma
   class Template < Prototype
     include Compiling::Compilable
 
-    module OutputType
-      COLLECTION  = :collection
-      RECORD      = :record
-    end
-    include OutputType
+    attr_writer :split
 
-    attr_writer :output
-
-    def output
-      @output || COLLECTION
+    def split
+      @split || false
     end
+    alias split? split
 
     def compile(data, evaluator)
-      if output == COLLECTION
-        compile_collection(data, evaluator)
-      elsif output == RECORD
+      if split?
         compile_record(data, evaluator)
       else
-        raise ArgumentError, "Cannot compile output type: #{output}"
+        compile_collection(data, evaluator)
       end
     end
 
