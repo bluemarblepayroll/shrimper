@@ -9,12 +9,18 @@
 
 module Proforma
   module Modeling
-    class Pane < AttributeBasedObject
+    class Pane
       # A line is a single label:value entry in a pane.
-      class Line < AttributeBasedObject
+      class Line
         include Compiling::Compilable
+        acts_as_hashable
 
         attr_writer :label, :value
+
+        def initialize(label: '', value: '')
+          @label = label
+          @value = value
+        end
 
         def label
           @label.to_s

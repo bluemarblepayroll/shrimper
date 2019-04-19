@@ -12,12 +12,18 @@ module Proforma
     # A grouping is an inverted collection, meaning, it iterates each child once per record
     # instead of only one time.  It also provides a mechanic to traverse data to tap
     # nested child data (through the property attribute.)
-    class Grouping < AttributeBasedObject
+    class Grouping
       include Compiling::Compilable
+      acts_as_hashable
 
       attr_accessor :property
 
       attr_writer :children
+
+      def initialize(children: [], property: nil)
+        @children = ModelFactory.array(children)
+        @property = property
+      end
 
       def children
         Array(@children)

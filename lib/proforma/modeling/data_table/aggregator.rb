@@ -9,17 +9,26 @@
 
 module Proforma
   module Modeling
-    class DataTable < AttributeBasedObject
+    class DataTable
       # An Aggregator is a table aggregator function configuration.
-      class Aggregator < AttributeBasedObject
+      class Aggregator
+        acts_as_hashable
+
         module Function
           SUM = :sum
+          AVE = :ave
         end
         include Function
 
         attr_accessor :property
 
         attr_writer :function, :name
+
+        def initialize(function: SUM, name: '', property: nil)
+          @function = function
+          @name     = name
+          @property = property
+        end
 
         def function
           @function || SUM

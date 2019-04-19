@@ -9,18 +9,33 @@
 
 module Proforma
   module Modeling
-    class DataTable < AttributeBasedObject
+    class DataTable
       # An explicit table column that understands how to compile header, body, and footer cells
       # from records.
-      class Column < AttributeBasedObject
+      class Column
         include Modeling::Types::Align
         include Compiling::Compilable
+        acts_as_hashable
 
         attr_writer :align,
                     :body,
                     :footer,
                     :header,
                     :width
+
+        def initialize(
+          align: LEFT,
+          body: '',
+          footer: '',
+          header: '',
+          width: nil
+        )
+          @align  = align
+          @body   = body
+          @footer = footer
+          @header = header
+          @width  = width
+        end
 
         def align
           @align || LEFT

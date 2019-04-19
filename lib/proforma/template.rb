@@ -13,8 +13,15 @@ module Proforma
   # a text, pdf, or spreadsheet file.
   class Template < Prototype
     include Compiling::Compilable
+    acts_as_hashable
 
     attr_writer :split
+
+    def initialize(children: [], split: false, title: '')
+      @split = split
+
+      super(children: children, title: title)
+    end
 
     def split
       @split || false

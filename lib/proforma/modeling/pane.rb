@@ -16,10 +16,15 @@ module Proforma
     # a table's columns.  For a pane, it makes up a vertical section.  Each column (section)
     # then has a number of lines which holds the label:value pairs that facilitates data
     # rendering.
-    class Pane < AttributeBasedObject
+    class Pane
       include Compiling::Compilable
+      acts_as_hashable
 
       attr_writer :columns
+
+      def initialize(columns: [])
+        @columns = Column.array(columns)
+      end
 
       def columns
         Array(@columns)

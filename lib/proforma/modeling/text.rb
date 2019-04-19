@@ -10,13 +10,18 @@
 module Proforma
   module Modeling
     # Emit and render basic text against a record.
-    class Text < AttributeBasedObject
+    class Text
       include Compiling::Compilable
       extend Forwardable
+      acts_as_hashable
 
       def_delegator :value, :empty?, :empty?
 
       attr_writer :value
+
+      def initialize(value: '')
+        @value = value
+      end
 
       def value
         @value.to_s

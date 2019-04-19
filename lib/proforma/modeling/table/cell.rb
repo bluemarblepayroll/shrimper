@@ -9,13 +9,20 @@
 
 module Proforma
   module Modeling
-    class Table < AttributeBasedObject
+    class Table
       # The lowest unit of a table.  Each row is comprised of zero or more cells.
-      class Cell < AttributeBasedObject
+      class Cell
         include Compiling::Compilable
         include Types::Align
+        acts_as_hashable
 
         attr_writer :align, :text, :width
+
+        def initialize(align: LEFT, text: '', width: nil)
+          @align  = align
+          @text   = text
+          @width  = width
+        end
 
         def align
           @align || LEFT

@@ -17,8 +17,16 @@ module Proforma
     # A table has three sections: header, body, footer.
     # Each section has rows.
     # Each row has cells.
-    class Table < AttributeBasedObject
+    class Table
+      acts_as_hashable
+
       attr_writer :body, :footer, :header
+
+      def initialize(body: Section.new, footer: Section.new, header: Section.new)
+        @body   = Section.make(body)
+        @footer = Section.make(footer)
+        @header = Section.make(header)
+      end
 
       def body
         @body || Section.new

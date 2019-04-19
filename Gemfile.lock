@@ -2,10 +2,12 @@ PATH
   remote: .
   specs:
     proforma (1.0.0)
+      acts_as_hashable (~> 1)
 
 GEM
   remote: https://rubygems.org/
   specs:
+    acts_as_hashable (1.0.5)
     ansi (1.5.0)
     ast (2.4.0)
     coderay (1.1.2)

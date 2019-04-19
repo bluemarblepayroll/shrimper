@@ -9,11 +9,17 @@
 
 module Proforma
   module Modeling
-    class Table < AttributeBasedObject
+    class Table
       # The second lowest unit of a table.  A table's header, body, and footer is each
       # composed of zero or more rows.
-      class Row < AttributeBasedObject
+      class Row
+        acts_as_hashable
+
         attr_writer :cells
+
+        def initialize(cells: [])
+          @cells = Cell.array(cells)
+        end
 
         def cells
           Array(@cells)

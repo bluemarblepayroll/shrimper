@@ -11,6 +11,9 @@ module Proforma
   module Modeling
     # An object modeling of the notion of spacing between two other models/sections.
     class Spacer
+      acts_as_hashable
+
+      def initialize(*); end
     end
   end
 end

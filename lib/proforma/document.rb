@@ -11,9 +11,11 @@ module Proforma
   # A rendering engine will output one or more of these objects. It is the final realization
   # of the compilation + rendering process.
   class Document
+    acts_as_hashable
+
     attr_reader :contents, :extension, :title
 
-    def initialize(contents:, extension:, title:)
+    def initialize(contents: nil, extension: '', title: '')
       @contents   = contents
       @extension  = extension
       @title      = title

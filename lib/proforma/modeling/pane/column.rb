@@ -9,12 +9,13 @@
 
 module Proforma
   module Modeling
-    class Pane < AttributeBasedObject
+    class Pane
       # A Pane Column is a list of lines that understands how to compile itself against a
       # data source.
-      class Column < AttributeBasedObject
+      class Column
         extend Forwardable
         include Types::Align
+        acts_as_hashable
 
         attr_writer :align,
                     :label_width,
@@ -22,6 +23,18 @@ module Proforma
                     :value_width
 
         def_delegator :lines, :length, :line_count
+
+        def initialize(
+          align: LEFT,
+          label_width: nil,
+          lines: [],
+          value_width: nil
+        )
+          @align        = align
+          @label_width  = label_width
+          @lines        = Line.array(lines)
+          @value_width  = value_width
+        end
 
         def align
           @align || LEFT

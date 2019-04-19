@@ -11,8 +11,14 @@ module Proforma
   module Modeling
     # A general purpose grouping of modeling objects.  When compiled, they will each be
     # compiled once then their output(s) are combined and flattened.
-    class Collection < AttributeBasedObject
+    class Collection
+      acts_as_hashable
+
       attr_writer :children
+
+      def initialize(children: [])
+        @children = ModelFactory.array(children)
+      end
 
       def children
         Array(@children)

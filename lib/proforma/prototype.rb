@@ -9,8 +9,13 @@
 
 module Proforma
   # A prototype is a compiled template that has been flattened and ready for rendering.
-  class Prototype < AttributeBasedObject
+  class Prototype
     attr_writer :children, :title
+
+    def initialize(children: [], title: '')
+      @children = ModelFactory.array(children)
+      @title    = title
+    end
 
     def children
       Array(@children)

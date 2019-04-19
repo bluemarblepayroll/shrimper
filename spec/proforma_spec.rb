@@ -18,7 +18,7 @@ describe ::Proforma do
     snapshot_filenames.each do |file|
       contents = yaml_read(file)
 
-      expected_documents = contents['documents']
+      expected_documents = Proforma::Document.array(contents['documents'])
 
       actual_documents = described_class.render(
         contents['data'],

@@ -12,12 +12,27 @@ module Proforma
     # A Banner is a specific type of header that is comprised of an image and some text.
     # Both the image and text could be optional and, like all modeling components,
     # it is up to the rendering engine how to render it.
-    class Banner < AttributeBasedObject
+    class Banner
       include Compiling::Compilable
+      acts_as_hashable
 
       attr_writer :details, :image_height, :image_width, :title
 
       attr_accessor :image
+
+      def initialize(
+        details: '',
+        image: nil,
+        image_height: nil,
+        image_width: nil,
+        title: ''
+      )
+        @details      = details
+        @image        = image
+        @image_height = image_height
+        @image_width  = image_width
+        @title        = title
+      end
 
       def details
         @details.to_s

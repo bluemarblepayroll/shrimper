@@ -13,14 +13,27 @@ require_relative 'data_table/column'
 module Proforma
   module Modeling
     # A table that understands how to be compiled against a data source.
-    class DataTable < AttributeBasedObject
+    class DataTable
       include Compiling::Compilable
+      acts_as_hashable
 
       attr_accessor :property
 
       attr_writer :aggregators,
                   :columns,
                   :empty_message
+
+      def initialize(
+        aggregators: [],
+        columns: [],
+        empty_message: '',
+        property: nil
+      )
+        @aggregators    = Aggregator.array(aggregators)
+        @columns        = Column.array(columns)
+        @empty_message  = empty_message
+        @property       = property
+      end
 
       def empty_message
         @empty_message.to_s

@@ -7,11 +7,15 @@
 # LICENSE file in the root directory of this source tree.
 #
 
+require 'acts_as_hashable'
 require 'bigdecimal'
 require 'forwardable'
 require 'stringio'
 
-require_relative 'proforma/attribute_based_object'
+# Monkey-patching core libaries
+require_relative 'proforma/core_ext/hash'
+Hash.include ::Proforma::CoreExt::Hash
+
 require_relative 'proforma/compiling'
 require_relative 'proforma/document'
 require_relative 'proforma/hash_evaluator'
@@ -19,17 +23,15 @@ require_relative 'proforma/modeling'
 require_relative 'proforma/plain_text_renderer'
 require_relative 'proforma/prototype'
 require_relative 'proforma/template'
+require_relative 'proforma/type_factory'
+require_relative 'proforma/model_factory'
 
 # The top-level API that should be seen as the main entry point into this library.
 module Proforma
   class << self
-    def render(
-      data,
-      template,
-      evaluator: HashEvaluator.new,
-      renderer: PlainTextRenderer.new
-    )
-      template.compile(data, evaluator)
+    def render(data, template, evaluator: HashEvaluator.new, renderer: PlainTextRenderer.new)
+      Template.make(template)
+              .compile(data, evaluator)
               .map { |prototype| renderer.render(prototype) }
     end
   end

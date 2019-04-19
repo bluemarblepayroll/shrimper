@@ -9,10 +9,16 @@
 
 module Proforma
   module Modeling
-    class Table < AttributeBasedObject
+    class Table
       # A table section has zero or more rows.
-      class Section < AttributeBasedObject
+      class Section
+        acts_as_hashable
+
         attr_writer :rows
+
+        def initialize(rows: [])
+          @rows = Row.array(rows)
+        end
 
         def rows
           Array(@rows)
