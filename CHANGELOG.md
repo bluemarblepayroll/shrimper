@@ -1,6 +1,6 @@
-# 1.0.0 (April 20th, 2019)
+# 1.0.0-alpha (April 19th, 2019)
 
-Initial implementation.
+Publishing first candidate of initial release.
 
 # 0.0.1 (March 14th, 2019)
 
