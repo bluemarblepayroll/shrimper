@@ -69,21 +69,41 @@ Let's say we have a list of users:
 
 ````ruby
 data = [
-  { id: 1, first: 'Matt', last: 'Preamble' },
-  { id: 2, first: 'Katie', last: 'Dolphin' },
-  { id: 3, first: 'Timmy', last: 'Smith' }
+  { id: 1, first: 'Matt', last: 'Smith' },
+  { id: 2, first: 'Katie', last: 'Rizzo' },
+  { id: 3, first: 'Nathan', last: 'Nathanson' }
+]
+
+template = {
+  title: 'User List',
+  children: [
+    {
+      type: 'DataTable',
+      columns: [
+        { header: 'ID Number', body: '$:id' },
+        { header: 'First Name', body: '$:first' }
+        { header: 'Last Name', body: '$:last' }
+      ]
+    }
+  ]
+}
+
+documents = Proforma.render(data, template)
+````
+
+The `documents` variable will now be an array with only one document object:
+
+````ruby
+documents = [
+  {
+    title: 'User List',
+    extension: '.txt',
+    contents: ...
+  }
 ]
 ````
 
-We could render this using the following template:
-
-
-
-### Rendering Record Details
-
-### Putting it all Together
-
-
+The `contents` attribute will be the rendered text-based table.
 
 ## Contributing
 
