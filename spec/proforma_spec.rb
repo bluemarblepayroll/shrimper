@@ -30,4 +30,201 @@ describe ::Proforma do
       expect(actual_documents).to eq(expected_documents)
     end
   end
+
+  describe 'README examples' do
+    specify 'Getting Started: Rendering a List' do
+      data = [
+        { id: 1, first: 'Matt', last: 'Smith' },
+        { id: 2, first: 'Katie', last: 'Rizzo' },
+        { id: 3, first: 'Nathan', last: 'Nathanson' }
+      ]
+
+      template = {
+        title: 'User List',
+        children: [
+          {
+            type: 'DataTable',
+            columns: [
+              { header: 'ID Number', body: '$:id' },
+              { header: 'First Name', body: '$:first' },
+              { header: 'Last Name', body: '$:last' }
+            ]
+          }
+        ]
+      }
+
+      actual_documents = described_class.render(data, template)
+
+      expected_documents = [
+        Proforma::Document.new(
+          contents: "ID Number, First Name, Last Name\n1, Matt, Smith"\
+                    "\n2, Katie, Rizzo\n3, Nathan, Nathanson\n",
+          extension: '.txt',
+          title: 'User List'
+        )
+      ]
+
+      expect(actual_documents).to eq(expected_documents)
+    end
+
+    specify 'Rendering Records' do
+      data = [
+        { id: 1, first: 'Matt', last: 'Smith' },
+        { id: 2, first: 'Katie', last: 'Rizzo' },
+        { id: 3, first: 'Nathan', last: 'Nathanson' }
+      ]
+
+      template = {
+        title: 'User Details',
+        split: true, # notice the split directive here.
+        children: [
+          {
+            type: 'Pane',
+            columns: [
+              {
+                lines: [
+                  { label: 'ID Number', value: '$:id' },
+                  { label: 'First Name', value: '$:first' }
+                ]
+              },
+              {
+                lines: [
+                  { label: 'Last Name', value: '$:last' }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+
+      actual_documents = Proforma.render(data, template)
+
+      expected_documents = [
+        Proforma::Document.new(
+          contents: "ID Number: 1\nFirst Name: Matt\nLast Name: Smith\n",
+          extension: '.txt',
+          title: 'User Details'
+        ),
+        Proforma::Document.new(
+          contents: "ID Number: 2\nFirst Name: Katie\nLast Name: Rizzo\n",
+          extension: '.txt',
+          title: 'User Details'
+        ),
+        Proforma::Document.new(
+          contents: "ID Number: 3\nFirst Name: Nathan\nLast Name: Nathanson\n",
+          extension: '.txt',
+          title: 'User Details'
+        )
+      ]
+
+      expect(actual_documents).to eq(expected_documents)
+    end
+
+    specify 'Bringing It All Together' do
+      data = [
+        {
+          id: 1,
+          first: 'Matt',
+          last: 'Smith',
+          phone_numbers: [
+            { type: 'Mobile', number: '444-333-2222' },
+            { type: 'Home', number: '444-333-2222' }
+          ]
+        },
+        {
+          id: 2,
+          first: 'Katie',
+          last: 'Rizzo',
+          phone_numbers: [
+            { type: 'Fax', number: '888-777-6666' }
+          ]
+        },
+        {
+          id: 3,
+          first: 'Nathan',
+          last: 'Nathanson',
+          phone_numbers: []
+        }
+      ]
+
+      template = {
+        title: 'User Report',
+        children: [
+          {
+            type: 'Banner',
+            title: 'System A',
+            details: "555 N. Michigan Ave.\nChicago, IL 55555\n555-555-5555 ext. 5132"
+          },
+          { type: 'Header', value: 'User List' },
+          { type: 'Separator' },
+          { type: 'Spacer' },
+          {
+            type: 'DataTable',
+            columns: [
+              { header: 'ID Number', body: '$:id' },
+              { header: 'First Name', body: '$:first' },
+              { header: 'Last Name', body: '$:last' }
+            ]
+          },
+          { type: 'Spacer' },
+          {
+            type: 'Grouping',
+            children: [
+              { type: 'Header', value: 'User Details' },
+              { type: 'Separator' },
+              { type: 'Spacer' },
+              {
+                type: 'Pane',
+                columns: [
+                  {
+                    lines: [
+                      { label: 'ID Number', value: '$:id' },
+                      { label: 'First Name', value: '$:first' }
+                    ]
+                  },
+                  {
+                    lines: [
+                      { label: 'Last Name', value: '$:last' }
+                    ]
+                  }
+                ]
+              },
+              {
+                type: 'DataTable',
+                property: 'phone_numbers',
+                columns: [
+                  { header: 'Type', body: '$:type' },
+                  { header: 'Number', body: '$:number' }
+                ]
+              },
+              { type: 'Spacer' }
+            ]
+          }
+        ]
+      }
+
+      actual_documents = Proforma.render(data, template)
+
+      expected_documents = [
+        Proforma::Document.new(
+          contents: "========================================\nSystem A\n=================="\
+                    "======================\n555 N. Michigan Ave.\nChicago, IL 55555\n"\
+                    "555-555-5555 ext. 5132\n========================================\nUSER"\
+                    " LIST\n----------------------------------------\n\nID Number, First Name,"\
+                    " Last Name\n1, Matt, Smith\n2, Katie, Rizzo\n3, Nathan, Nathanson\n\nUSER"\
+                    " DETAILS\n----------------------------------------\n\nID Number: "\
+                    "1\nFirst Name: Matt\nLast Name: Smith\nType, Number\nMobile, 444-333-2222"\
+                    "\nHome, 444-333-2222\n\nUSER DETAILS\n-----------------------------------"\
+                    "-----\n\nID Number: 2\nFirst Name: Katie\nLast Name: Rizzo\nType, Number\n"\
+                    "Fax, 888-777-6666\n\nUSER DETAILS\n----------------------------------"\
+                    "------\n\nID Number: 3\nFirst Name: Nathan\nLast Name: "\
+                    "Nathanson\nType, Number\n\n",
+          extension: '.txt',
+          title: 'User Report'
+        )
+      ]
+
+      expect(actual_documents).to eq(expected_documents)
+    end
+  end
 end

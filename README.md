@@ -81,7 +81,7 @@ template = {
       type: 'DataTable',
       columns: [
         { header: 'ID Number', body: '$:id' },
-        { header: 'First Name', body: '$:first' }
+        { header: 'First Name', body: '$:first' },
         { header: 'Last Name', body: '$:last' }
       ]
     }
@@ -96,14 +96,184 @@ The `documents` variable will now be an array with only one document object:
 ````ruby
 documents = [
   {
-    title: 'User List',
-    extension: '.txt',
-    contents: ...
-  }
+    contents: "ID Number, First Name, Last Name\n1, Matt, Smith\n...", # condensed
+    extension: ".txt",
+    title: "User List"
+  )
 ]
 ````
 
 The `contents` attribute will be the rendered text-based table.
+
+### Rendering Records
+
+Let's now say instead of rendering a table we want to render one unique document per record:
+
+````ruby
+data = [
+  { id: 1, first: 'Matt', last: 'Smith' },
+  { id: 2, first: 'Katie', last: 'Rizzo' },
+  { id: 3, first: 'Nathan', last: 'Nathanson' }
+]
+
+template = {
+  title: 'User Details',
+  split: true, # notice the split directive here.
+  children: [
+    {
+      type: 'Pane',
+      columns: [
+        {
+          lines: [
+            { label: 'ID Number', value: '$:id' },
+            { label: 'First Name', value: '$:first' }
+          ]
+        },
+        {
+          lines: [
+            { label: 'Last Name', value: '$:last' }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
+documents = Proforma.render(data, template)
+````
+
+The `documents` variable will now be an array with three document objects:
+
+````ruby
+documents = [
+  {
+    contents: "ID Number: 1\nFirst Name: Matt\nLast Name: Smith\n",
+    extension: ".txt",
+    title: "User Details"
+  },
+  {
+    contents: "ID Number: 2\nFirst Name: Katie\nLast Name: Rizzo\n",
+    extension: ".txt",
+    title: "User Details"
+  },
+  {
+    contents: "ID Number: 3\nFirst Name: Nathan\nLast Name: Nathanson\n",
+    extension: ".txt",
+    title: "User Details"
+  }
+]
+````
+
+Each document will have a `contents` attribute that contains its respective rendered text-based pane.
+
+### Bringing It All Together
+
+Let's build on our previous user list example and add more data.  With this additional data, we will add sub-data tables using grouping:
+
+````ruby
+data = [
+  {
+    id: 1,
+    first: 'Matt',
+    last: 'Smith',
+    phone_numbers: [
+      { type: 'Mobile', number: '444-333-2222' },
+      { type: 'Home', number: '444-333-2222' }
+    ]
+  },
+  {
+    id: 2,
+    first: 'Katie',
+    last: 'Rizzo',
+    phone_numbers: [
+      { type: 'Fax', number: '888-777-6666' }
+    ]
+  },
+  {
+    id: 3,
+    first: 'Nathan',
+    last: 'Nathanson',
+    phone_numbers: []
+  }
+]
+
+template = {
+  title: 'User Report',
+  children: [
+    {
+      type: 'Banner',
+      title: 'System A',
+      details: "555 N. Michigan Ave.\nChicago, IL 55555\n555-555-5555 ext. 5132"
+    },
+    { type: 'Header', value: 'User List' },
+    { type: 'Separator' },
+    { type: 'Spacer' },
+    {
+      type: 'DataTable',
+      columns: [
+        { header: 'ID Number', body: '$:id' },
+        { header: 'First Name', body: '$:first' },
+        { header: 'Last Name', body: '$:last' }
+      ]
+    },
+    { type: 'Spacer' },
+    {
+      type: 'Grouping',
+      children: [
+        { type: 'Header', value: 'User Details' },
+        { type: 'Separator' },
+        { type: 'Spacer' },
+        {
+          type: 'Pane',
+          columns: [
+            {
+              lines: [
+                { label: 'ID Number', value: '$:id' },
+                { label: 'First Name', value: '$:first' }
+              ]
+            },
+            {
+              lines: [
+                { label: 'Last Name', value: '$:last' }
+              ]
+            }
+          ]
+        },
+        {
+          type: 'DataTable',
+          property: 'phone_numbers',
+          columns: [
+            { header: 'Type', body: '$:type' },
+            { header: 'Number', body: '$:number' }
+          ]
+        },
+        { type: 'Spacer' }
+      ]
+    }
+  ]
+}
+
+documents = Proforma.render(data, template)
+````
+
+The `documents` variable will now be an array with only one document object:
+
+````ruby
+documents = [
+  {
+    contents: '========================================\nSystem A\n=======Nathan...', # ...
+    extension: '.txt',
+    title: 'User Report'
+  }
+]
+````
+
+The `contents` attribute will now contain:
+
+* banner
+* user summary table
+* user details pane (one per user)
+* user phone numbers table (one per user)
 
 ## Contributing
 
