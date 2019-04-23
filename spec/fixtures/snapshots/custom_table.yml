@@ -34,14 +34,14 @@ template:
         rows:
         - cells:
           - text: ID Number
-          - text: $:id
+          - text: $id
           - text: Username
-          - text: $:username
+          - text: $username
         - cells:
           - text: First Name
-          - text: $:first
+          - text: $first
           - text: Last Name
-          - text: $:last
+          - text: $last
 
 documents:
 - title: Custom Table

@@ -47,19 +47,19 @@ template:
         name: login_count_ave
     columns:
     - header: ID Number
-      body: $:id
+      body: $id
       footer: Login Count Ave.
     - header: First Name
-      body: $:first
-      footer: $:login_count_ave
+      body: $first
+      footer: $login_count_ave
     - header: Last Name
-      body: $:last
+      body: $last
     - header: Username
-      body: $:username
+      body: $username
       footer: Login Count Sum
     - header: Login Count
-      footer: $:login_count_sum
-      body: $:login_count
+      footer: $login_count_sum
+      body: $login_count
   - type: Spacer
   - type: Grouping
     children:
@@ -71,11 +71,11 @@ template:
       - label_width: 25.0
         lines:
         - label: ID Number
-          value: $:id
+          value: $id
         - label: First Name
-          value: $:first
+          value: $first
         - label: Last Name
-          value: $:last
+          value: $last
     - type: Spacer
     - type: Header
       value: Phone Numbers
@@ -84,9 +84,9 @@ template:
       empty_message: No phone numbers.
       columns:
       - header: Type
-        body: $:type
+        body: $type
       - header: Number
-        body: $:number
+        body: $number
     - type: Spacer
 
 documents:

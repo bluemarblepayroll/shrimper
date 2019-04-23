@@ -14,7 +14,7 @@ module Proforma
   # This, being a prototype for customizable evaluators, just provides basic evaluation:
   # - it can only handle hashes for value extraction
   # - if text is prefixed with a dollar sign and colon then it means it will be dynamically
-  #   evaluated against the record.  For example: $:id
+  #   evaluated against the record.  For example: $id
   class HashEvaluator
     PROPERTY_PREFIX = '$'
 
@@ -27,7 +27,7 @@ module Proforma
 
     def text(object, expression)
       if expression.to_s.start_with?(PROPERTY_PREFIX)
-        value(object, expression.to_s[2..-1])
+        value(object, expression.to_s[PROPERTY_PREFIX.length..-1])
       else
         expression
       end

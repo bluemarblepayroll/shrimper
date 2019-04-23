@@ -45,9 +45,9 @@ describe ::Proforma do
           {
             type: 'DataTable',
             columns: [
-              { header: 'ID Number', body: '$:id' },
-              { header: 'First Name', body: '$:first' },
-              { header: 'Last Name', body: '$:last' }
+              { header: 'ID Number', body: '$id' },
+              { header: 'First Name', body: '$first' },
+              { header: 'Last Name', body: '$last' }
             ]
           }
         ]
@@ -83,13 +83,13 @@ describe ::Proforma do
             columns: [
               {
                 lines: [
-                  { label: 'ID Number', value: '$:id' },
-                  { label: 'First Name', value: '$:first' }
+                  { label: 'ID Number', value: '$id' },
+                  { label: 'First Name', value: '$first' }
                 ]
               },
               {
                 lines: [
-                  { label: 'Last Name', value: '$:last' }
+                  { label: 'Last Name', value: '$last' }
                 ]
               }
             ]
@@ -161,9 +161,9 @@ describe ::Proforma do
           {
             type: 'DataTable',
             columns: [
-              { header: 'ID Number', body: '$:id' },
-              { header: 'First Name', body: '$:first' },
-              { header: 'Last Name', body: '$:last' }
+              { header: 'ID Number', body: '$id' },
+              { header: 'First Name', body: '$first' },
+              { header: 'Last Name', body: '$last' }
             ]
           },
           { type: 'Spacer' },
@@ -178,13 +178,13 @@ describe ::Proforma do
                 columns: [
                   {
                     lines: [
-                      { label: 'ID Number', value: '$:id' },
-                      { label: 'First Name', value: '$:first' }
+                      { label: 'ID Number', value: '$id' },
+                      { label: 'First Name', value: '$first' }
                     ]
                   },
                   {
                     lines: [
-                      { label: 'Last Name', value: '$:last' }
+                      { label: 'Last Name', value: '$last' }
                     ]
                   }
                 ]
@@ -193,8 +193,8 @@ describe ::Proforma do
                 type: 'DataTable',
                 property: 'phone_numbers',
                 columns: [
-                  { header: 'Type', body: '$:type' },
-                  { header: 'Number', body: '$:number' }
+                  { header: 'Type', body: '$type' },
+                  { header: 'Number', body: '$number' }
                 ]
               },
               { type: 'Spacer' }
