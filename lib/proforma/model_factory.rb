@@ -7,6 +7,8 @@
 # LICENSE file in the root directory of this source tree.
 #
 
+require_relative 'modeling'
+
 module Proforma
   # This class serves as a singleton that can make Proforma::Modeling components.
   class ModelFactory

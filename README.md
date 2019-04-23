@@ -8,25 +8,25 @@ Proforma is a Ruby-based document rendering framework with a focus on being:
 2. Simple: basic set of controls that limit flexibility but increase simplicity and standardization
 3. Extendable: different value resolvers and document rendering engines can be plugged in
 
-The basic premise is you input a dataset and a template and Proforma:
+The basic premise is you input a dataset and a template and Proforma will:
 
-1. Evaluate and data-bind each component
-2. Render as a file
+1. Evaluate and data-bind each component.
+2. Render given data and template as a file.
 
 When a component is in the process of being data-bound it will be evaluated against the current data being read.  The evaluator serves two purposes:
 
-1. Given a record and an expression, find me a raw value (resolving)
-2. Given a record and an expression, return me a formatted string-based value (text templating)
+1. Given a record and an expression, find me a raw value (resolving.)
+2. Given a record and an expression, return me a formatted string-based value (text templating.)
 
 The basic evaluator that comes with this library is Proforma::HashEvaluator.  It is limited to:
 
-1. only resolving values for hash objects and cannot handle nesting / recursion / dot notation.
-2. only text templating simple expressions: if the expression starts with a ```$:``` then it is noted as being a data-bound value.  The value proceeding the ```$:``` will be resolved and returned.  If it does not begin with this special string then it is deemed just a basic string and it will be returned verbatim.
+1. Only resolving values for hash objects and cannot handle nesting / recursion / dot notation.
+2. Only text templating simple expressions: if the expression starts with a `$` then it is noted as being a data-bound value.  The value proceeding the `$` will be resolved and returned.  If it does not begin with this special string then the value following the $ will be resolved and returned.
 
 Other libraries that can be plugged in, such as:
 
-1. [![proforma-extended-evaluator](https://github.com/bluemarblepayroll/proforma-extended-evaluator): adds nested dot-notation object value resolution and rich text templating.
-2. [![proforma-prawn-renderer](https://github.com/bluemarblepayroll/proforma-prawn-renderer)]: adds PDF rendering.
+1. [proforma-extended-evaluator](https://github.com/bluemarblepayroll/proforma-extended-evaluator): adds nested dot-notation object value resolution and rich text templating.
+2. [proforma-prawn-renderer](https://github.com/bluemarblepayroll/proforma-prawn-renderer): adds PDF rendering.
 
 See the libraries respective README files for more information.
 
@@ -274,6 +274,8 @@ The `contents` attribute will now contain:
 * user summary table
 * user details pane (one per user)
 * user phone numbers table (one per user)
+
+The full contents can be seen in [this fixture file](https://github.com/bluemarblepayroll/proforma/blob/master/spec/fixtures/bringing_it_all_together.txt).
 
 ## Contributing
 

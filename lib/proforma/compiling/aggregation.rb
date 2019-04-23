@@ -19,6 +19,8 @@ module Proforma
         @aggregators  = Array(aggregators)
         @counters     = {}
         @evaluator    = evaluator
+
+        freeze
       end
 
       def add(records)
@@ -35,7 +37,7 @@ module Proforma
         self
       end
 
-      def to_hash
+      def to_h
         aggregators.map { |aggregator| execute(aggregator) }.to_h
       end
 

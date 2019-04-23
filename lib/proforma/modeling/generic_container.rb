@@ -40,9 +40,7 @@ module Proforma
       def compile(data, evaluator)
         compiled_children = children.map { |child| child.compile(data, evaluator) }
 
-        args = {}.tap { |hash| hash[child_key] = compiled_children }
-
-        self.class.new(args)
+        self.class.new(child_key => compiled_children)
       end
 
       private

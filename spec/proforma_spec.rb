@@ -207,18 +207,7 @@ describe ::Proforma do
 
       expected_documents = [
         Proforma::Document.new(
-          contents: "========================================\nSystem A\n=================="\
-                    "======================\n555 N. Michigan Ave.\nChicago, IL 55555\n"\
-                    "555-555-5555 ext. 5132\n========================================\nUSER"\
-                    " LIST\n----------------------------------------\n\nID Number, First Name,"\
-                    " Last Name\n1, Matt, Smith\n2, Katie, Rizzo\n3, Nathan, Nathanson\n\nUSER"\
-                    " DETAILS\n----------------------------------------\n\nID Number: "\
-                    "1\nFirst Name: Matt\nLast Name: Smith\nType, Number\nMobile, 444-333-2222"\
-                    "\nHome, 444-333-2222\n\nUSER DETAILS\n-----------------------------------"\
-                    "-----\n\nID Number: 2\nFirst Name: Katie\nLast Name: Rizzo\nType, Number\n"\
-                    "Fax, 888-777-6666\n\nUSER DETAILS\n----------------------------------"\
-                    "------\n\nID Number: 3\nFirst Name: Nathan\nLast Name: "\
-                    "Nathanson\nType, Number\n\n",
+          contents: fixture('bringing_it_all_together.txt'),
           extension: '.txt',
           title: 'User Report'
         )

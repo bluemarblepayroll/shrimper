@@ -9,6 +9,7 @@
 
 require_relative 'modeling/generic_container'
 require_relative 'modeling/types'
+
 require_relative 'modeling/banner'
 require_relative 'modeling/collection'
 require_relative 'modeling/data_table'

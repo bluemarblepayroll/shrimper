@@ -28,6 +28,8 @@ module Proforma
       end
 
       def ave
+        return BigDecimal(0) if count.zero?
+
         sum / count
       end
     end

@@ -19,7 +19,9 @@ SimpleCov.start
 require './lib/proforma'
 
 def yaml_read(file)
-  # rubocop:disable Security/YAMLLoad
-  YAML.load(File.open(file))
-  # rubocop:enable Security/YAMLLoad
+  YAML.safe_load(File.open(file))
+end
+
+def fixture(file)
+  File.open(File.join('spec', 'fixtures', file)).read
 end

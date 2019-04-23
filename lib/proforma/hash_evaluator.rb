@@ -16,17 +16,13 @@ module Proforma
   # - if text is prefixed with a dollar sign and colon then it means it will be dynamically
   #   evaluated against the record.  For example: $:id
   class HashEvaluator
-    PROPERTY_PREFIX = '$:'
+    PROPERTY_PREFIX = '$'
 
     def value(object, expression)
       return object if expression.to_s.empty?
       return nil    unless object.is_a?(Hash)
 
-      if object.key?(expression.to_s)
-        object[expression.to_s]
-      elsif object.key?(expression.to_s.to_sym)
-        object[expression.to_s.to_sym]
-      end
+      object[expression.to_s] || object[expression.to_s.to_sym]
     end
 
     def text(object, expression)

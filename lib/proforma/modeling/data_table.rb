@@ -64,7 +64,7 @@ module Proforma
       private
 
       def make_aggregator_meta_data(records, evaluator)
-        Compiling::Aggregation.new(aggregators, evaluator).add(records).to_hash
+        Compiling::Aggregation.new(aggregators, evaluator).add(records).to_h
       end
 
       def footer?
