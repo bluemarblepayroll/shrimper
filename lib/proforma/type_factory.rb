@@ -10,6 +10,8 @@
 module Proforma
   # A TypeFactory object understands how to build objects using a special designated '$type' key.
   class TypeFactory
+    using HashRefinements
+
     DEFAULT_TYPE_KEY = :type
 
     attr_reader :registry, :type_key

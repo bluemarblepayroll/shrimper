@@ -12,13 +12,10 @@ require 'bigdecimal'
 require 'forwardable'
 require 'stringio'
 
-# Monkey-patching core libaries
-require_relative 'proforma/core_ext/hash'
-Hash.include ::Proforma::CoreExt::Hash
-
 require_relative 'proforma/compiling'
 require_relative 'proforma/document'
 require_relative 'proforma/hash_evaluator'
+require_relative 'proforma/hash_refinements'
 require_relative 'proforma/model_factory'
 require_relative 'proforma/modeling'
 require_relative 'proforma/plain_text_renderer'
