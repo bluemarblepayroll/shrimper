@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    proforma (1.0.1)
+    proforma (1.0.2)
       acts_as_hashable (~> 1, >= 1.1.0.pre.alpha)
 
 GEM
