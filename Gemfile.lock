@@ -2,12 +2,12 @@ PATH
   remote: .
   specs:
     proforma (1.0.2)
-      acts_as_hashable (~> 1, >= 1.1.0.pre.alpha)
+      acts_as_hashable (~> 1, >= 1.1.0)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    acts_as_hashable (1.1.0.pre.alpha)
+    acts_as_hashable (1.1.0)
     ansi (1.5.0)
     ast (2.4.0)
     byebug (11.0.1)
